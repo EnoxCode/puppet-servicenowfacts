@@ -1,0 +1,14 @@
+{
+  "name": "puppet-servicenowfacts",
+  "version": "0.1.0",
+  "author": "Luc Raeskin",
+  "summary": "A custom facts provider for servicenow",
+  "license": "Apache-2.0",
+  "source": "https://github.com/lucraeskin/puppet-servicenowfacts",
+  "project_page": "https://github.com/lucraeskin/puppet-servicenowfacts",
+  "issues_url": "https://github.com/lucraeskin/puppet-servicenowfacts",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+
