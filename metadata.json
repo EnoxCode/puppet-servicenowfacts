@@ -2,7 +2,7 @@
   "name": "puppet-servicenowfacts",
   "version": "0.1.0",
   "author": "Luc Raeskin",
-  "summary": "A custom facts provider for servicenow",
+  "summary": "A custom facts provider for ServiceNow",
   "license": "Apache-2.0",
   "source": "https://github.com/lucraeskin/puppet-servicenowfacts",
   "project_page": "https://github.com/lucraeskin/puppet-servicenowfacts",
