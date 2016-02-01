@@ -322,7 +322,7 @@ Style/TrailingWhitespace:
 Style/StringLiterals:
   Enabled: true
 
-Style/TrailingComma:
+Style/TrailingCommaInLiteral:
   Enabled: true
 
 Style/GlobalVars:
