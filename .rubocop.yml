@@ -198,7 +198,7 @@ Style/TrailingBlankLines:
 Style/SpaceInsideBlockBraces:
   Enabled: true
 
-Style/SpaceInsideBrackets:
+Style/SpaceInsideBrackets:d
   Enabled: true
 
 Style/SpaceInsideHashLiteralBraces:
@@ -216,7 +216,7 @@ Style/SpaceAfterColon:
 Style/SpaceAfterComma:
   Enabled: true
 
-Style/SpaceAfterControlKeyword:
+Style/SpaceAroundKeyword:
   Enabled: true
 
 Style/SpaceAfterMethodName:
