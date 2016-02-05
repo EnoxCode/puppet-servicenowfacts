@@ -1,4 +1,4 @@
-# servicenowfacts
+# ServiceNow Facts - A custom plugin for Facter (puppet only)
 
 #### Table of Contents
 
@@ -13,15 +13,11 @@
 1. [Development - Guide for contributing to the module](#development)
 
 ## Description
+In most servicenow environments the cmdb is used for registration of information about the node
+This plugin provides a flexible way to implement some of these attributes in the cmdb as facter facts.
 
-Start with a one- or two-sentence summary of what the module does and/or what
-problem it solves. This is your 30-second elevator pitch for your module.
-Consider including OS/Puppet version it works with.
-
-You can give more descriptive information in a second paragraph. This paragraph
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?" If your module has a range of functionality (installation, configuration,
-management, etc.), this is the time to mention it.
+Since not every CMDB is moddeled in the same manner, this facter plugin uses a yaml config file for connection to servicenow
+and an array of servicenow fields that must be converted to facts of the current running node.
 
 ## Setup
 
