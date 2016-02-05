@@ -4,7 +4,7 @@ require 'json'
 require 'yaml'
 
 @configfile = File.join(File.dirname(Puppet.settings[:config]), 'servicenowfacts.yml')
-fail('ERROR file does not exists: ' + @configfile) unless File.exist?(@configfile)
+raise('ERROR file does not exists: ' + @configfile) unless File.exist?(@configfile)
 
 @config = YAML.load_file(@configfile)
 
@@ -71,7 +71,7 @@ end
 # For each defined variable in the config file add a facter
 result = JSON.parse(response.body)
 if result['result'].count == 0
-  fail "ERROR There is no result in ServiceNow in #{TABLE} for #{OS_HOSTNAME}"
+  raise("ERROR There is no result in ServiceNow in #{TABLE} for #{OS_HOSTNAME}")
 end
 
 # TODO: cache creation only if the result of  was OK.
