@@ -3,7 +3,7 @@ require 'faraday'
 require 'json'
 require 'yaml'
 
-@configfile = './config.yml'
+@configfile = File.join(File.dirname(Puppet.settings[:config]), 'servicenowfacts.yml')
 fail('ERROR file does not exists: ' + @configfile) unless File.exist?(@configfile)
 
 @config = YAML.load_file(@configfile)
@@ -15,6 +15,7 @@ SN_WEBSERVICE = @config['servicenow']['webservice']
 SN_PASS = @config['servicenow']['password']
 SN_VARIABLES = @config['servicenow']['variables']
 SN_PREFIX = @config['servicenow']['prefix']
+SN_CACHEDIR = @config['servicenow']['cachedir']
 
 # Retrieving Host and Kernel from facter
 OS_KERNEL = Facter.value(:kernel)
@@ -32,6 +33,7 @@ conn = Faraday.new(url: SN_INSTANCE.to_s, ssl: { verify: false }) do |faraday|
 end
 
 # Build Response using hostname and table name from the constants
+# def getServiceNowResponse(conn)
 begin
   response = conn.get do |req|
     req.url "#{SN_WEBSERVICE}/#{TABLE}"
@@ -41,7 +43,7 @@ begin
     req.headers['Content-Type'] = 'application/json'
   end
 rescue Faraday::Error => e
-  raise ('ERROR Could not connect to ServiceNow: ' + e)
+  raise('ERROR Could not connect to ServiceNow: ' + e)
 end
 
 # Function to add Fact to facter
@@ -54,12 +56,28 @@ def add_servicenow_fact(name, value)
   end
 end
 
+# TODO: Implement error control and test on windows.
+def create_cache(dir, hostname, cache)
+  # Let's create the cache directory if it does exists.
+  Dir.mkdir(dir) unless File.exist?(dir)
+
+  # Create the file and fill it with the cache
+  cachefilename = File.join(dir, "#{hostname}.yml")
+  cachefile = File.new(cachefilename, 'w+')
+  cachefile.write(cache)
+  cachefile.close
+end
+
 # For each defined variable in the config file add a facter
 result = JSON.parse(response.body)
 if result['result'].count == 0
   fail "ERROR There is no result in ServiceNow in #{TABLE} for #{OS_HOSTNAME}"
 end
 
-for item in SN_VARIABLES
+# TODO: cache creation only if the result of  was OK.
+create_cache(SN_CACHEDIR, OS_HOSTNAME, result['result'][0])
+
+SN_VARIABLES.each do |item|
+  # TODO: add variables only if no cache hit otherwise use cache.
   add_servicenow_fact(item, result['result'][0][item])
 end
