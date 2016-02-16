@@ -67,7 +67,7 @@ end
 create_cache(SN_CACHEDIR, OS_HOSTNAME, result['result'][0])
 
 Facter.add(name) do
-    setcode do
-      result['result'][0]
-    end
+  setcode do
+    result['result'][0]
+  end
 end
