@@ -14,7 +14,6 @@ SN_USER = @config['servicenow']['user']
 SN_WEBSERVICE = @config['servicenow']['webservice']
 SN_PASS = @config['servicenow']['password']
 SN_VARIABLES = @config['servicenow']['variables']
-SN_PREFIX = @config['servicenow']['prefix']
 SN_CACHEDIR = @config['servicenow']['cachedir']
 
 # Retrieving Host and Kernel from facter
@@ -38,22 +37,12 @@ begin
   response = conn.get do |req|
     req.url "#{SN_WEBSERVICE}/#{TABLE}"
     req.params['sysparm_query'] = "name=#{OS_HOSTNAME}"
-    # req.params['sysparm_query'] = "name=aaic"
+    req.params['sysparm_fields'] = SN_VARIABLES.join(',')
     req.params['sysparm_limit'] = 1
     req.headers['Content-Type'] = 'application/json'
   end
 rescue Faraday::Error => e
   raise('ERROR Could not connect to ServiceNow: ' + e)
-end
-
-# Function to add Fact to facter
-def add_servicenow_fact(name, value)
-  name = SN_PREFIX + name
-  Facter.add(name) do
-    setcode do
-      value
-    end
-  end
 end
 
 # TODO: Implement error control and test on windows.
@@ -77,7 +66,8 @@ end
 # TODO: cache creation only if the result of  was OK.
 create_cache(SN_CACHEDIR, OS_HOSTNAME, result['result'][0])
 
-SN_VARIABLES.each do |item|
-  # TODO: add variables only if no cache hit otherwise use cache.
-  add_servicenow_fact(item, result['result'][0][item])
+Facter.add(name) do
+    setcode do
+      result['result'][0]
+    end
 end
