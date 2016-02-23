@@ -9,6 +9,7 @@ require 'puppet-lint/tasks/puppet-lint'
 require 'puppet-syntax/tasks/puppet-syntax'
 require 'metadata-json-lint/rake_task'
 require 'rubocop/rake_task'
+require 'puppet-strings/rake_tasks'
 
 # These gems aren't always present, for instance
 # on Travis with --without development
@@ -56,5 +57,6 @@ task test: [
   :syntax,
   :lint,
   :rubocop,
+  #strings:generate,
   #  :spec,
 ]

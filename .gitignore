@@ -1,2 +1,3 @@
 dev/*
 Gemfile.lock
+.remote-sync.json

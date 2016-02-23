@@ -12,7 +12,7 @@ group :test do
   gem 'rubocop'
   gem 'simplecov'
   gem 'simplecov-console'
-
+  gem 'puppet-strings', :git => 'https://github.com/puppetlabs/puppetlabs-strings.git'
   gem 'puppet-lint-absolute_classname-check'
   gem 'puppet-lint-leading_zero-check'
   gem 'puppet-lint-trailing_comma-check'
